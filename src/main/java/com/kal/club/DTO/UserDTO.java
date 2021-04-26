@@ -1,18 +1,9 @@
-package com.kal.club.Entity;
+package com.kal.club.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+public class UserDTO {
 
-@Entity
-@Table(name = "users")
-public class User extends Auditable{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
 
     private String fname;
@@ -21,16 +12,22 @@ public class User extends Auditable{
 
     private String lname;
 
-    @Column(nullable = false, unique = true)
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    //dependent entities are removed when the relationship to their "parent" entity is destroyed
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = "user", allowSetters = true)
-    private Set<UserRoles> roles = new HashSet<>();
+    public UserDTO() {
+
+    }
+
+    public UserDTO(Integer userId, String fname, String mname, String lname, String email, String password) {
+        this.userId = userId;
+        this.fname = fname;
+        this.mname = mname;
+        this.lname = lname;
+        this.email = email;
+        this.password = password;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -72,15 +69,11 @@ public class User extends Auditable{
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<UserRoles> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<UserRoles> roles) {
-        this.roles = roles;
     }
 }
