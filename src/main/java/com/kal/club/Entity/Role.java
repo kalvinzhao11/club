@@ -12,7 +12,7 @@ public class Role extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer roleid;
+    private long roleid;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -33,7 +33,7 @@ public class Role extends Auditable {
         return roleid;
     }
 
-    public void setRoleid(Integer roleid) {
+    public void setRoleid(long roleid) {
         this.roleid = roleid;
     }
 

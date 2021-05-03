@@ -47,8 +47,7 @@ public class UserRoles extends Auditable implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o)
         {
             return true;
@@ -58,13 +57,12 @@ public class UserRoles extends Auditable implements Serializable {
             return false;
         }
         UserRoles that = (UserRoles) o;
-        return ((user == null) ? 0 : user.getUserId()) == ((that.user == null) ? 0 : that.user.getUserId()) &&
+        return ((user == null) ? 0 : user.getUserid()) == ((that.user == null) ? 0 : that.user.getUserid()) &&
                 ((role == null) ? 0 : role.getRoleid()) == ((that.role == null) ? 0 : that.role.getRoleid());
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         // return Objects.hash(user.getUserid(), role.getRoleid());
         return 37;
     }

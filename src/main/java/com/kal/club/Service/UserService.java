@@ -6,16 +6,19 @@ import com.kal.club.Entity.User;
 import java.util.List;
 
 public interface UserService {
-    // save users
-    User save(UserDTO user);
+    List<User> findAll();
 
-    // delete users
-    //void delete(UserDTO userDTO);
+//    List<User> findByNameContaining(String username);
 
-    // update users
-    //void updateUsers(UserDTO UserDTO);
-    //
+    User findUserById(long id);
 
-    // get all users
-    List<UserDTO> findAllUsers();
+//    User findByName(String name);
+
+//    User findByUserEmail(String email);
+
+    void delete(long id);
+
+    User save(User user);
+
+    User update(User user, long id);
 }

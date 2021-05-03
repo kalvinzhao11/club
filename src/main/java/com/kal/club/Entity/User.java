@@ -1,10 +1,15 @@
 package com.kal.club.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,8 +17,9 @@ import java.util.Set;
 public class User extends Auditable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userid", unique = true, nullable = false)
+    private long userid;
 
     private String fname;
 
@@ -22,7 +28,7 @@ public class User extends Auditable{
     private String lname;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -32,12 +38,27 @@ public class User extends Auditable{
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
-    public Integer getUserId() {
-        return userId;
+    public User(String fname, String mname, String lname, String username, String password) {
+        this.fname = fname;
+        this.mname = mname;
+        this.lname = lname;
+        this.username = username;
+        setPassword(password);
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public User() {
+    }
+
+    public long getUserid() {
+        return userid;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setUserId(long userid) {
+        this.userid = userid;
     }
 
     public String getFname() {
@@ -64,15 +85,20 @@ public class User extends Auditable{
         this.lname = lname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public void setPasswordNoEncrypt(String password) {
         this.password = password;
     }
 
@@ -82,5 +108,16 @@ public class User extends Auditable{
 
     public void setRoles(Set<UserRoles> roles) {
         this.roles = roles;
+    }
+
+    @JsonIgnore
+    public List<SimpleGrantedAuthority> getAuthority() {
+        List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
+
+        for (UserRoles r : this.roles) {
+            String myRole = "ROLE_" + r.getRole().getName().toUpperCase();
+            rtnList.add(new SimpleGrantedAuthority(myRole));
+        }
+        return rtnList;
     }
 }

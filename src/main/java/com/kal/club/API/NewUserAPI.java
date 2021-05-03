@@ -3,6 +3,7 @@ package com.kal.club.API;
 import com.kal.club.DTO.UserDTO;
 import com.kal.club.Entity.User;
 import com.kal.club.Entity.UserRoles;
+import com.kal.club.Service.RoleService;
 import com.kal.club.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-public class OpenController {
+public class NewUserAPI {
 
     @Autowired
     UserService userService;
@@ -34,15 +35,15 @@ public class OpenController {
     public ResponseEntity<?> addSelf(HttpServletRequest httpServletRequest, @RequestBody UserDTO newminuser) throws Exception{
 
         //create new user
-        UserDTO newUser = new UserDTO();
+        User newUser = new User();
         newUser.setFname(newminuser.getFname());
         newUser.setMname(newminuser.getMname());
         newUser.setLname(newminuser.getLname());
         newUser.setPassword(newminuser.getPassword());
-        newUser.setEmail(newminuser.getEmail());
+        newUser.setUsername(newminuser.getUsername());
 
         Set<UserRoles> newRoles = new HashSet<>();
-        newRoles.add(new UserRoles(newUser, roleService.findByName("LEARNER")));//
+        newRoles.add(new UserRoles(newUser, roleService.findByName("MEMBER")));//
         newUser.setRoles(newRoles);
         newUser = userService.save(newUser);
 
@@ -65,10 +66,10 @@ public class OpenController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setAccept(acceptableMediaTypes);
-//        headers.setBasicAuth("system-client",
-//                "system-secret");
-        headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
-                System.getenv("OAUTHCLIENTSECRET"));
+        headers.setBasicAuth("system-client",
+                "system-secret");
+//        headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
+//                System.getenv("OAUTHCLIENTSECRET"));
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("grant_type",
@@ -76,7 +77,7 @@ public class OpenController {
         map.add("scope",
                 "read write trust");
         map.add("username",
-                newminuser.getEmail());
+                newminuser.getUsername());
         map.add("password",
                 newminuser.getPassword());
 
