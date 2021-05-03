@@ -1,7 +1,9 @@
 package com.kal.club.Entity;
 
-import javax.persistence.*;
-
+import javax.persistence.*
+        ;
+@Entity
+@Table(name = "points")
 public class Point extends Auditable{
 
     @Id
