@@ -1,21 +1,16 @@
 package com.kal.club.Service;
 
-import com.kal.club.DTO.UserDTO;
-import com.kal.club.Entity.Point;
 import com.kal.club.Entity.Role;
 import com.kal.club.Entity.User;
 import com.kal.club.Entity.UserRoles;
 import com.kal.club.Exception.ResourceNotFoundException;
-import com.kal.club.Repo.PointRepo;
 import com.kal.club.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Service(value = "userService")
@@ -29,9 +24,6 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     HelperFunctions helperFunctions;
-
-    @Autowired
-    PointRepo pointRepo;
 
     @Override
     public List<User> findAll() {
@@ -135,8 +127,6 @@ public class UserServiceImpl implements UserService{
                     .add(new UserRoles(newUser,
                             addRole));
         }
-        Point userPoint = new Point(0, newUser);
-        pointRepo.save(userPoint);
 
         return userRepo.save(newUser);
 

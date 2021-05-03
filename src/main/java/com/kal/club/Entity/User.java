@@ -37,6 +37,8 @@ public class User extends Auditable{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    private int points = 0;
+
     //dependent entities are removed when the relationship to their "parent" entity is destroyed
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
@@ -112,6 +114,14 @@ public class User extends Auditable{
 
     public void setRoles(Set<UserRoles> roles) {
         this.roles = roles;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     @JsonIgnore
