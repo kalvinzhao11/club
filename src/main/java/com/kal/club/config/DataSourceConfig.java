@@ -19,8 +19,7 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource dataSource() {
-        if (dbValue.equalsIgnoreCase("POSTGRESQL"))
-        {
+        if (dbValue.equalsIgnoreCase("POSTGRESQL")) {
             // Assume Heroku
             HikariConfig config = new HikariConfig();
             config.setDriverClassName("org.postgresql.Driver");

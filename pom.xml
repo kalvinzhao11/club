@@ -99,7 +99,7 @@
 
     <build>
 
-        <finalName>club</finalName>
+        <finalName>kzhao-club</finalName>
 
         <plugins>
 
