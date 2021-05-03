@@ -7,12 +7,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Valid
 @Table(name = "users")
 public class User extends Auditable{
 
@@ -28,6 +31,7 @@ public class User extends Auditable{
     private String lname;
 
     @Column(nullable = false, unique = true)
+    @Email(message="Please provide a valid email address")
     private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -66,10 +66,10 @@ public class NewUserAPI {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setAccept(acceptableMediaTypes);
-        headers.setBasicAuth("system-client",
-                "system-secret");
-//        headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
-//                System.getenv("OAUTHCLIENTSECRET"));
+//        headers.setBasicAuth("system-client",
+//                "system-secret");
+        headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
+                System.getenv("OAUTHCLIENTSECRET"));
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("grant_type",

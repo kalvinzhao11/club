@@ -32,7 +32,6 @@ public class SeedData implements CommandLineRunner {
         roleService.save(executive);
 
         User kal = new User("kalvin", "","zhao","kalvinzhao11","12345678aA");
-        //kal.setUserId(0);
         kal.getRoles().add(new UserRoles(kal, admin));
         userService.save(kal);
     }
