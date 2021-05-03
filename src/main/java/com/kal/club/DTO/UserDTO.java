@@ -2,6 +2,9 @@ package com.kal.club.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class UserDTO {
 
     private String fname;
@@ -12,6 +15,8 @@ public class UserDTO {
 
     private String username;
 
+    @NotNull
+    @Pattern(regexp = "[a-zA-z09._]+@[a-zA-Z]{2,}\\.[a-zA-Z.]+", message = "{invalid.email.format}")
     private String password;
 
     public UserDTO() {
